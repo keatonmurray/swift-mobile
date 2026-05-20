@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Bell,
   ChevronDown,
@@ -7,20 +7,33 @@ import {
   ArrowDownLeft,
   RefreshCw,
   Plus,
-  House,
-  Receipt,
-  CreditCard,
-  User,
-  RefreshCcw
 } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 const Homepage = () => {
+
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    const t = setTimeout(() => setVisible(true), 80)
+    return () => clearTimeout(t)
+  }, [])
+
+  const enter = (delay = 0) => ({
+    opacity: visible ? 1 : 0,
+    transform: visible ? 'translateY(0)' : 'translateY(20px)',
+    transition: `opacity 0.6s ease ${delay}s, transform 0.6s ease ${delay}s`,
+  })
+
   return (
     <div className="bg-main-pallette min-vh-100 text-white">
       <div className="container-fluid px-4 pt-4 mobile-shell-padding-bottom mobile-shell">
 
         {/* TOP BAR */}
-        <div className="d-flex justify-content-between align-items-center mb-5">
+        <div
+          style={enter(0)}
+          className="d-flex justify-content-between align-items-center mb-5"
+        >
           <span className="logo">
             <img
               src="/img/logo-inverted.png"
@@ -44,7 +57,10 @@ const Homepage = () => {
         </div>
 
         {/* WELCOME */}
-        <div className="mb-4">
+        <div
+          style={enter(0.1)}
+          className="mb-4"
+        >
           <p className="mb-1 text-white-60 fs-18">
             Welcome back,
           </p>
@@ -55,7 +71,10 @@ const Homepage = () => {
         </div>
 
         {/* BALANCE CARD */}
-        <div className="glass-card balance-card position-relative overflow-hidden mb-4">
+        <div
+          style={enter(0.2)}
+          className="glass-card balance-card position-relative overflow-hidden mb-4"
+        >
           <div className="position-absolute balance-glow" />
 
           <p className="mb-2 text-white-55 fs-14">
@@ -82,7 +101,10 @@ const Homepage = () => {
         </div>
 
         {/* ACTION BUTTONS */}
-        <div className="row g-3 mb-4">
+        <div
+          style={enter(0.3)}
+          className="row g-3 mb-4"
+        >
           {[
             {
               icon: <ArrowUpRight size={34} className="text-lime" />,
@@ -106,27 +128,30 @@ const Homepage = () => {
             },
           ].map((item, index) => (
             <div className="col-6" key={index}>
-              <div className="d-flex align-items-center glass-card action-card h-100 position-relative overflow-hidden">
+              <Link to="/send-money" className="text-decoration-none d-flex align-items-center glass-card action-card h-100 position-relative overflow-hidden">
                 <div>
                   <div className="mb-1">
-                      {item.icon}
-                    </div>
+                    {item.icon}
+                  </div>
 
-                    <h4 className="fw-semibold mb-1 fs-14">
-                      {item.title}
-                    </h4>
+                  <h4 className="fw-semibold mb-1 fs-14 text-white">
+                    {item.title}
+                  </h4>
 
-                    <p className="mb-0 text-white-45 fs-12">
-                      {item.subtitle}
-                    </p>
+                  <p className="mb-0 text-white-45 fs-12">
+                    {item.subtitle}
+                  </p>
                 </div>
-              </div>
+              </Link>
             </div>
           ))}
         </div>
 
         {/* CURRENCIES */}
-        <div className="glass-card radius-28 overflow-hidden mb-4">
+        <div
+          style={enter(0.4)}
+          className="glass-card radius-28 overflow-hidden mb-4"
+        >
           <div className="d-flex justify-content-between align-items-center p-3 border-bottom border-secondary border-opacity-10">
             <h3 className="fw-semibold mb-0 fs-16">
               Your Currencies
@@ -199,7 +224,10 @@ const Homepage = () => {
         </div>
 
         {/* SECURITY CARD */}
-        <div className="glass-card security-card d-flex justify-content-between align-items-center">
+        <div
+          style={enter(0.5)}
+          className="glass-card security-card d-flex justify-content-between align-items-center"
+        >
           <div className="d-flex align-items-center gap-3">
             <div className="security-circle d-flex align-items-center justify-content-center">
               🛡️

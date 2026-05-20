@@ -17,6 +17,11 @@
   background-color: #d9ff43;
 }
 
+.btn {
+  border-radius: 50px !important;
+  height: 60px !important;
+}
+
 /* =========================================================
    SWIFT MOBILE DESIGN SYSTEM
 ========================================================= */
@@ -29,6 +34,13 @@
 
 .mobile-shell-padding-bottom {
   padding-bottom: 100px !important;
+}
+
+.top-cta-btn {
+  width: 60px;
+  height: 60px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.06);
 }
 
 /* =========================================================
