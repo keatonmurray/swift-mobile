@@ -138,35 +138,37 @@ const SendMoney = () => {
             Recipient
           </p>
 
-          <div className="glass-card p-3 rounded-4 border border-secondary border-opacity-10 d-flex justify-content-between align-items-center">
+          <Link to="/recipient" className="text-decoration-none">
+            <div className="glass-card p-3 rounded-4 border border-secondary border-opacity-10 d-flex justify-content-between align-items-center">
 
-            <div className="d-flex align-items-center gap-3">
+                <div className="d-flex align-items-center gap-3">
 
-              <div
-                className="rounded-circle d-flex align-items-center justify-content-center"
-                style={{
-                  width: 50,
-                  height: 50,
-                  background: 'rgba(255,255,255,0.06)',
-                  fontWeight: 600,
-                }}
-              >
-                JS
-              </div>
+                <div
+                    className="rounded-circle d-flex text-white align-items-center justify-content-center"
+                    style={{
+                    width: 50,
+                    height: 50,
+                    background: 'rgba(255,255,255,0.06)',
+                    fontWeight: 600,
+                    }}
+                >
+                    JS
+                </div>
 
-              <div>
-                <h5 className="mb-1 fw-semibold">
-                  James Smith
-                </h5>
+                <div>
+                    <h5 className="mb-1 fw-semibold text-white">
+                    James Smith
+                    </h5>
 
-                <p className="mb-0 text-white-50 fs-14">
-                  james.smith@email.com
-                </p>
-              </div>
+                    <p className="mb-0 text-white-50 fs-14">
+                    james.smith@email.com
+                    </p>
+                </div>
+                </div>
+
+                <ChevronRight className="text-white-50" />
             </div>
-
-            <ChevronRight className="text-white-50" />
-          </div>
+          </Link>
         </div>
 
         {/* DELIVERY METHOD */}
