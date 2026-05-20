@@ -310,52 +310,11 @@ const ReceiveMoney = () => {
           style={enter(0.5)}
           className="text-center mt-4"
         >
-          <button className="btn btn-branded w-100 text-decoration-none fw-semibold">
+          <button className="btn btn-branded w-100 text-decoration-none fw-semibold mb-4">
             Load more
           </button>
         </div>
-      </div>
-
-      {/* BOTTOM NAV */}
-      <div
-        style={enter(0.6)}
-        className="glass-card border-top border-secondary border-opacity-10 px-3 py-2 d-flex justify-content-around align-items-center"
-      >
-
-        <div className="d-flex flex-column align-items-center gap-1 text-white-50">
-          <House size={22} />
-          <small>Home</small>
-        </div>
-
-        <div className="d-flex flex-column align-items-center gap-1 text-white-50">
-          <Receipt size={22} />
-          <small>Transactions</small>
-        </div>
-
-        <div
-          className="rounded-circle d-flex align-items-center justify-content-center"
-          style={{
-            width: 52,
-            height: 52,
-            background: '#D9FF43',
-            marginTop: -24,
-          }}
-        >
-          <RefreshCcw
-            color="#000"
-            size={24}
-          />
-        </div>
-
-        <div className="d-flex flex-column align-items-center gap-1 text-white-50">
-          <CreditCard size={22} />
-          <small>Cards</small>
-        </div>
-
-        <div className="d-flex flex-column align-items-center gap-1 text-white-50">
-          <User size={22} />
-          <small>Profile</small>
-        </div>
+        <br />
       </div>
     </div>
   )

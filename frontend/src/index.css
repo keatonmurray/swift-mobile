@@ -4,6 +4,10 @@
   font-family: 'Inter', sans-serif;
 }
 
+body {
+  overflow-x: hidden;
+}
+
 .bg-main-pallette {
   background:
     radial-gradient(circle at 20% 85%, rgba(0,255,140,0.45) 0%, rgba(0,255,140,0.18) 18%, transparent 40%),
@@ -51,6 +55,7 @@
   padding: 15px;
   background: #d9ff43;
   color: black;
+  border-radius: 50px;
 }
 
 /* =========================================================
@@ -103,6 +108,10 @@
 
 .fs-18 {
   font-size: 18px !important;
+}
+
+.fs-20 {
+  font-size: 20px !important;
 }
 
 .fs-22 {
@@ -169,6 +178,7 @@
   -webkit-backdrop-filter: blur(20px);
   background: rgba(0,0,0,0.8);
   border-top: 1px solid rgba(255,255,255,0.08);
+  z-index: 1000;
 }
 
 /* =========================================================
