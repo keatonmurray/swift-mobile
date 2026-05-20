@@ -4,6 +4,7 @@ import Home from '../src/pages/Home'
 import SendMoney from '../src/pages/SendMoney'
 import Recipient from '../src/pages/Recipient'
 import ReceiveMoney from '../src/pages/ReceiveMoney'
+import AcceptPayment from '../src/pages/AcceptPayment'
 
 const AppRoutes = () => {
   return (
@@ -13,6 +14,7 @@ const AppRoutes = () => {
       <Route path="/send-money" element={<SendMoney />} />
       <Route path="/receive-money" element={<ReceiveMoney />} />
       <Route path="/recipient" element={<Recipient />} />
+      <Route path="/accept-payment" element={<AcceptPayment />} />
     </Routes>
   )
 }

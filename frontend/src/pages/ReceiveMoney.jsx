@@ -14,9 +14,11 @@ import {
   ArrowDownToLine,
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const ReceiveMoney = () => {
 
+  const navigate = useNavigate()
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
@@ -41,6 +43,7 @@ const ReceiveMoney = () => {
           account: 'EUR',
           note: 'Thank you!',
           amount: '+€924.35',
+          path:"/accept-payment"
         },
         {
           initials: 'AW',
@@ -49,6 +52,7 @@ const ReceiveMoney = () => {
           account: 'USD',
           note: 'For dinner',
           amount: '+$150.00',
+          path:"/accept-payment"
         },
         {
           initials: 'MR',
@@ -57,6 +61,7 @@ const ReceiveMoney = () => {
           account: 'GBP',
           note: 'Here you go',
           amount: '+£320.50',
+          path:"/accept-payment"
         },
       ],
     },
@@ -200,7 +205,6 @@ const ReceiveMoney = () => {
 
         {/* TRANSACTIONS */}
         <div style={enter(0.4)}>
-
           {transactions.map((group, groupIndex) => (
             <div
               key={groupIndex}
@@ -214,9 +218,10 @@ const ReceiveMoney = () => {
               <div className="d-flex flex-column gap-2">
 
                 {group.items.map((item, index) => (
-                  <div
+                  <Link
+                    to={item.path || '#'}
                     key={index}
-                    className="glass-card rounded-4 p-3 d-flex justify-content-between align-items-center"
+                    className="glass-card rounded-4 p-3 d-flex justify-content-between align-items-center text-decoration-none text-white"
                     style={{
                       border: '1px solid rgba(255,255,255,0.06)',
                     }}
@@ -282,7 +287,6 @@ const ReceiveMoney = () => {
                           className="mb-0 fw-medium fs-12"
                           style={{
                             color: '#14D19B',
-                            fontSize: 14,
                           }}
                         >
                           Received
@@ -294,7 +298,7 @@ const ReceiveMoney = () => {
                         size={18}
                       />
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </div>
