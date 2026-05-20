@@ -3,6 +3,7 @@ import Homepage from '../src/pages/Homepage'
 import Home from '../src/pages/Home'
 import SendMoney from '../src/pages/SendMoney'
 import Recipient from '../src/pages/Recipient'
+import ReceiveMoney from '../src/pages/ReceiveMoney'
 
 const AppRoutes = () => {
   return (
@@ -10,6 +11,7 @@ const AppRoutes = () => {
       <Route path="/" element={<Home />} />
       <Route path="/dashboard" element={<Homepage />} />
       <Route path="/send-money" element={<SendMoney />} />
+      <Route path="/receive-money" element={<ReceiveMoney />} />
       <Route path="/recipient" element={<Recipient />} />
     </Routes>
   )

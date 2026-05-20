@@ -19,7 +19,6 @@
 
 .btn {
   border-radius: 50px !important;
-  height: 60px !important;
 }
 
 /* =========================================================
@@ -41,6 +40,17 @@
   height: 60px;
   background: rgba(255,255,255,0.05);
   border: 1px solid rgba(255,255,255,0.06);
+}
+
+.icon-rounded {
+  width: 50px;
+  height: 50px;
+}
+
+.btn-branded {
+  padding: 15px;
+  background: #d9ff43;
+  color: black;
 }
 
 /* =========================================================

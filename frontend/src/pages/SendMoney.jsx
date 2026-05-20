@@ -257,7 +257,7 @@ const SendMoney = () => {
         {/* BUTTON */}
         <div style={enter(0.7)}>
           <button
-            className="btn w-100 rounded-4 fw-semibold bg-brand fs-18"
+            className="btn w-100 rounded-4 fw-semibold bg-brand fs-18 btn-branded"
           >
             Review Transfer
           </button>

@@ -118,7 +118,7 @@ const Homepage = () => {
                 icon: <ArrowDownLeft size={34} className="text-lime" />,
                 title: 'Receive',
                 subtitle: 'Receive money',
-                path: '/receive',
+                path: '/receive-money',
               },
               {
                 icon: <RefreshCw size={30} className="text-lime" />,
