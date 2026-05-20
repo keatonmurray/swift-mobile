@@ -1,20 +1,16 @@
 import {
-  ArrowLeft,
-  HelpCircle,
   Wallet,
   Landmark,
   CreditCard,
   Smartphone,
   Shield,
   ChevronRight,
-  Home,
-  ReceiptText,
-  ArrowUpDown,
-  User,
   ChevronLeft,
   CircleHelp,
 } from 'lucide-react'
+
 import { Link } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 
 const methods = [
   {
@@ -42,6 +38,20 @@ const methods = [
 const quickAmounts = [50, 100, 250, 500]
 
 const AddMoney = () => {
+
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    const t = setTimeout(() => setVisible(true), 80)
+    return () => clearTimeout(t)
+  }, [])
+
+  const enter = (delay = 0) => ({
+    opacity: visible ? 1 : 0,
+    transform: visible ? 'translateY(0)' : 'translateY(20px)',
+    transition: `opacity 0.6s ease ${delay}s, transform 0.6s ease ${delay}s`,
+  })
+
   return (
     <div
       className="min-vh-100 text-white position-relative overflow-hidden bg-main-pallette"
@@ -74,23 +84,33 @@ const AddMoney = () => {
       >
 
         {/* HEADER */}
-        <div className="d-flex justify-content-between align-items-center mb-5">
-         <Link to="/dashboard"
+        <div
+          style={enter(0)}
+          className="d-flex justify-content-between align-items-center mb-5"
+        >
+          <Link
+            to="/dashboard"
             className="btn btn-dark rounded-circle d-flex top-cta-btn align-items-center justify-content-center"
           >
             <ChevronLeft size={18} color="white" />
           </Link>
-            <h4 className="mb-0 fw-semibold">Add Money</h4>
-            
-            <button
-                className="btn btn-dark rounded-circle d-flex top-cta-btn align-items-center justify-content-center"
-                >
-                <CircleHelp size={18} color="white" />
-            </button>
+
+          <h4 className="mb-0 fw-semibold">
+            Add Money
+          </h4>
+
+          <button
+            className="btn btn-dark rounded-circle d-flex top-cta-btn align-items-center justify-content-center"
+          >
+            <CircleHelp size={18} color="white" />
+          </button>
         </div>
 
         {/* ADD TO */}
-        <div className="mb-4">
+        <div
+          style={enter(0.1)}
+          className="mb-4"
+        >
 
           <p
             className="text-white-50 mb-3"
@@ -159,7 +179,10 @@ const AddMoney = () => {
         </div>
 
         {/* METHODS */}
-        <div className="mb-4">
+        <div
+          style={enter(0.2)}
+          className="mb-4"
+        >
 
           <p
             className="text-white-50 mb-3"
@@ -173,71 +196,82 @@ const AddMoney = () => {
             {methods.map((method, index) => (
               <div
                 key={index}
+                style={enter(0.25 + index * 0.08)}
                 className="d-flex justify-content-between align-items-center"
-                style={{
-                  padding: '18px',
-                  borderRadius: 24,
-                  border: method.active
-                    ? '1px solid #D6FF00'
-                    : '1px solid rgba(255,255,255,0.08)',
-                  background: 'rgba(255,255,255,0.03)',
-                  backdropFilter: 'blur(18px)',
-                  boxShadow: method.active
-                    ? '0 0 24px rgba(214,255,0,0.08)'
-                    : 'none',
-                }}
               >
 
-                <div className="d-flex align-items-start gap-3">
+                <div
+                  className="w-100 d-flex justify-content-between align-items-center"
+                  style={{
+                    padding: '18px',
+                    borderRadius: 24,
+                    border: method.active
+                      ? '1px solid #D6FF00'
+                      : '1px solid rgba(255,255,255,0.08)',
+                    background: 'rgba(255,255,255,0.03)',
+                    backdropFilter: 'blur(18px)',
+                    boxShadow: method.active
+                      ? '0 0 24px rgba(214,255,0,0.08)'
+                      : 'none',
+                  }}
+                >
+
+                  <div className="d-flex align-items-start gap-3">
+
+                    <div
+                      className="d-flex align-items-center justify-content-center"
+                      style={{
+                        width: 52,
+                        height: 52,
+                        borderRadius: '50%',
+                        background: 'rgba(214,255,0,0.08)',
+                        color: '#D6FF00',
+                      }}
+                    >
+                      {method.icon}
+                    </div>
+
+                    <div>
+
+                      <p className="fs-16 text-white mb-1 fw-semibold">
+                        {method.title}
+                      </p>
+
+                      <p
+                        className="text-white-50 mb-0"
+                        style={{
+                          fontSize: 12,
+                        }}
+                      >
+                        {method.subtitle}
+                      </p>
+
+                      <small className="text-white-50 fs-12">
+                        {method.time}
+                      </small>
+
+                    </div>
+
+                  </div>
 
                   <div
                     className="d-flex align-items-center justify-content-center"
                     style={{
-                      width: 52,
-                      height: 52,
+                      width: 26,
+                      height: 26,
                       borderRadius: '50%',
-                      background: 'rgba(214,255,0,0.08)',
-                      color: '#D6FF00',
+                      border: method.active
+                        ? 'none'
+                        : '2px solid rgba(255,255,255,0.4)',
+                      background: method.active
+                        ? '#D6FF00'
+                        : 'transparent',
+                      color: '#000',
                     }}
                   >
-                    {method.icon}
+                    {method.active && '✓'}
                   </div>
 
-                    <div>
-                        <p className="fs-16 text-white mb-1 fw-semibold">Bank Transfer</p>
-                        <p
-                        className="text-white-50 mb-0"
-                        style={{
-                            fontSize: 12,
-                        }}
-                        >
-                        {method.subtitle}
-                        </p>
-
-                        <small className="text-white-50 fs-12">
-                            {method.time}
-                        </small>
-
-                    </div>
-
-                </div>
-
-                <div
-                  className="d-flex align-items-center justify-content-center"
-                  style={{
-                    width: 26,
-                    height: 26,
-                    borderRadius: '50%',
-                    border: method.active
-                      ? 'none'
-                      : '2px solid rgba(255,255,255,0.4)',
-                    background: method.active
-                      ? '#D6FF00'
-                      : 'transparent',
-                    color: '#000',
-                  }}
-                >
-                  {method.active && '✓'}
                 </div>
 
               </div>
@@ -248,7 +282,10 @@ const AddMoney = () => {
         </div>
 
         {/* AMOUNT */}
-        <div className="mb-4">
+        <div
+          style={enter(0.45)}
+          className="mb-4"
+        >
 
           <p
             className="text-white-50 mb-3"
@@ -293,10 +330,11 @@ const AddMoney = () => {
 
           <div className="row g-3">
 
-            {quickAmounts.map((amount) => (
+            {quickAmounts.map((amount, index) => (
               <div
                 key={amount}
                 className="col-3"
+                style={enter(0.5 + index * 0.05)}
               >
                 <button
                   className="w-100"
@@ -320,59 +358,69 @@ const AddMoney = () => {
 
         {/* SECURITY */}
         <div
+          style={enter(0.7)}
           className="d-flex justify-content-between align-items-center mb-4"
-          style={{
-            background: 'rgba(255,255,255,0.03)',
-            border: '1px solid rgba(255,255,255,0.08)',
-            borderRadius: 24,
-            padding: '18px',
-          }}
         >
 
-          <div className="d-flex align-items-center gap-3">
+          <div
+            className="w-100 d-flex justify-content-between align-items-center"
+            style={{
+              background: 'rgba(255,255,255,0.03)',
+              border: '1px solid rgba(255,255,255,0.08)',
+              borderRadius: 24,
+              padding: '18px',
+            }}
+          >
 
-            <div
-              className="d-flex align-items-center justify-content-center"
-              style={{
-                width: 52,
-                height: 52,
-                borderRadius: '50%',
-                background: 'rgba(214,255,0,0.08)',
-                color: '#D6FF00',
-              }}
-            >
-              <Shield size={24} />
-            </div>
+            <div className="d-flex align-items-center gap-3">
 
-            <div>
-
-              <h6 className="mb-1 fw-semibold">
-                Secure & Reliable
-              </h6>
-
-              <p
-                className="text-white-50 mb-0"
+              <div
+                className="d-flex align-items-center justify-content-center"
                 style={{
-                  fontSize: 14,
+                  width: 52,
+                  height: 52,
+                  borderRadius: '50%',
+                  background: 'rgba(214,255,0,0.08)',
+                  color: '#D6FF00',
                 }}
               >
-                Your money is protected with bank-level security and encryption.
-              </p>
+                <Shield size={24} />
+              </div>
+
+              <div>
+
+                <h6 className="mb-1 fw-semibold">
+                  Secure & Reliable
+                </h6>
+
+                <p
+                  className="text-white-50 mb-0"
+                  style={{
+                    fontSize: 14,
+                  }}
+                >
+                  Your money is protected with bank-level
+                  security and encryption.
+                </p>
+
+              </div>
 
             </div>
 
-          </div>
+            <ChevronRight className="text-white-50" />
 
-          <ChevronRight className="text-white-50" />
+          </div>
 
         </div>
 
         {/* CTA */}
-        <button
-          className="w-100 border-0 fw-bold btn-branded"
-        >
-          Continue
-        </button>
+        <div style={enter(0.8)}>
+          <button
+            className="w-100 border-0 fw-bold btn-branded"
+          >
+            Continue
+          </button>
+        </div>
 
       </div>
     </div>
