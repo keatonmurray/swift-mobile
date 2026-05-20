@@ -9,9 +9,11 @@ import {
   Plus,
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const Homepage = () => {
-
+  
+  const navigate = useNavigate()
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
@@ -106,45 +108,56 @@ const Homepage = () => {
           className="row g-3 mb-4"
         >
           {[
-            {
-              icon: <ArrowUpRight size={34} className="text-lime" />,
-              title: 'Send',
-              subtitle: 'Send money',
-            },
-            {
-              icon: <ArrowDownLeft size={34} className="text-lime" />,
-              title: 'Receive',
-              subtitle: 'Receive money',
-            },
-            {
-              icon: <RefreshCw size={30} className="text-lime" />,
-              title: 'Convert',
-              subtitle: 'Convert currencies',
-            },
-            {
-              icon: <Plus size={34} className="text-lime" />,
-              title: 'Add Money',
-              subtitle: 'Deposit to account',
-            },
-          ].map((item, index) => (
-            <div className="col-6" key={index}>
-              <Link to="/send-money" className="text-decoration-none d-flex align-items-center glass-card action-card h-100 position-relative overflow-hidden">
-                <div>
-                  <div className="mb-1">
-                    {item.icon}
+              {
+                icon: <ArrowUpRight size={34} className="text-lime" />,
+                title: 'Send',
+                subtitle: 'Send money',
+                path: '/send-money',
+              },
+              {
+                icon: <ArrowDownLeft size={34} className="text-lime" />,
+                title: 'Receive',
+                subtitle: 'Receive money',
+                path: '/receive',
+              },
+              {
+                icon: <RefreshCw size={30} className="text-lime" />,
+                title: 'Convert',
+                subtitle: 'Convert currencies',
+                path: '/convert',
+              },
+              {
+                icon: <Plus size={34} className="text-lime" />,
+                title: 'Add Money',
+                subtitle: 'Deposit to account',
+                path: '/add-money',
+              },
+            ].map((item, index) => (
+              <div className="col-6" key={index}>
+                <div
+                  onClick={() => navigate(item.path)}
+                  className="d-flex align-items-center glass-card action-card h-100 position-relative overflow-hidden"
+                  style={{
+                    cursor: 'pointer',
+                    ...enter(0.3),
+                  }}
+                >
+                  <div>
+                    <div className="mb-1">
+                      {item.icon}
+                    </div>
+
+                    <h4 className="fw-semibold mb-1 fs-14 text-white">
+                      {item.title}
+                    </h4>
+
+                    <p className="mb-0 text-white-45 fs-12">
+                      {item.subtitle}
+                    </p>
                   </div>
-
-                  <h4 className="fw-semibold mb-1 fs-14 text-white">
-                    {item.title}
-                  </h4>
-
-                  <p className="mb-0 text-white-45 fs-12">
-                    {item.subtitle}
-                  </p>
                 </div>
-              </Link>
-            </div>
-          ))}
+              </div>
+            ))}
         </div>
 
         {/* CURRENCIES */}
