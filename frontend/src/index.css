@@ -1,0 +1,311 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+* {
+  font-family: 'Inter', sans-serif;
+}
+
+.bg-main-pallette {
+  background:
+    radial-gradient(circle at 20% 85%, rgba(0,255,140,0.45) 0%, rgba(0,255,140,0.18) 18%, transparent 40%),
+    radial-gradient(circle at 55% 100%, rgba(157,255,0,0.45) 0%, rgba(157,255,0,0.15) 20%, transparent 42%),
+    radial-gradient(circle at 88% 42%, rgba(0,255,255,0.18) 0%, transparent 28%),
+    radial-gradient(circle at 45% 30%, rgba(80,120,255,0.08) 0%, transparent 35%),
+    #000000;
+}
+
+/* =========================================================
+   SWIFT MOBILE DESIGN SYSTEM
+========================================================= */
+
+/* MOBILE CONTAINER */
+.mobile-shell {
+  max-width: 430px;
+  margin: 0 auto;
+}
+
+.mobile-shell-padding-bottom {
+  padding-bottom: 100px !important;
+}
+
+/* =========================================================
+   COLORS
+========================================================= */
+
+.text-lime {
+  color: #D9FF43 !important;
+}
+
+.text-white-60 {
+  color: rgba(255,255,255,0.6) !important;
+}
+
+.text-white-55 {
+  color: rgba(255,255,255,0.55) !important;
+}
+
+.text-white-45 {
+  color: rgba(255,255,255,0.45) !important;
+}
+
+.text-white-40 {
+  color: rgba(255,255,255,0.4) !important;
+}
+
+.text-white-35 {
+  color: rgba(255,255,255,0.35) !important;
+}
+
+/* =========================================================
+   FONT SIZES
+========================================================= */
+
+.fs-12 {
+  font-size: 12px !important;
+}
+
+.fs-14 {
+  font-size: 14px !important;
+}
+
+.fs-15 {
+  font-size: 15px !important;
+}
+
+.fs-16 {
+  font-size: 16px !important;
+}
+
+.fs-18 {
+  font-size: 18px !important;
+}
+
+.fs-22 {
+  font-size: 22px !important;
+}
+
+.fs-26 {
+  font-size: 26px !important;
+}
+
+.fs-34 {
+  font-size: 34px !important;
+}
+
+.fs-38 {
+  font-size: 38px !important;
+}
+
+.fs-42 {
+  font-size: 42px !important;
+}
+
+.fs-48 {
+  font-size: 48px !important;
+}
+
+.fs-54 {
+  font-size: 54px !important;
+}
+
+/* =========================================================
+   LETTER SPACING
+========================================================= */
+
+.ls-1 {
+  letter-spacing: -1px;
+}
+
+.ls-2 {
+  letter-spacing: -2px;
+}
+
+/* =========================================================
+   LINE HEIGHT
+========================================================= */
+
+.lh-1 {
+  line-height: 1;
+}
+
+/* =========================================================
+   GLASSMORPHISM
+========================================================= */
+
+.glass-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.glass-nav {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgba(0,0,0,0.8);
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+/* =========================================================
+   RADIUS
+========================================================= */
+
+.radius-20 {
+  border-radius: 20px;
+}
+
+.radius-24 {
+  border-radius: 24px;
+}
+
+.radius-26 {
+  border-radius: 26px;
+}
+
+.radius-28 {
+  border-radius: 28px;
+}
+
+.radius-circle {
+  border-radius: 50%;
+}
+
+/* =========================================================
+   PROFILE CIRCLE
+========================================================= */
+
+.profile-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.03);
+}
+
+/* =========================================================
+   NOTIFICATION DOT
+========================================================= */
+
+.notification-dot {
+  width: 8px;
+  height: 8px;
+  background: #D9FF43;
+  border-radius: 50%;
+  top: 0;
+  right: 0;
+}
+
+/* =========================================================
+   BALANCE CARD
+========================================================= */
+
+.balance-card {
+  border-radius: 28px;
+  padding: 24px;
+}
+
+.balance-glow {
+  width: 180px;
+  height: 180px;
+  background: rgba(0,255,140,0.18);
+  filter: blur(60px);
+  right: -40px;
+  top: -20px;
+}
+
+/* =========================================================
+   ACTION BUTTONS
+========================================================= */
+
+.action-card {
+  border-radius: 26px;
+  padding: 22px;
+  min-height: 130px;
+}
+
+/* =========================================================
+   SECURITY CARD
+========================================================= */
+
+.security-card {
+  border-radius: 28px;
+  padding: 20px;
+}
+
+.security-circle {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(217,255,67,0.08);
+}
+
+/* =========================================================
+   FLOATING ACTION BUTTON
+========================================================= */
+
+.fab-button {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: #D9FF43;
+  margin-top: -35px;
+}
+
+/* =========================================================
+   BORDERS
+========================================================= */
+
+.border-soft {
+  border-color: rgba(255,255,255,0.08) !important;
+}
+
+/* =========================================================
+   BACKGROUNDS
+========================================================= */
+
+.bg-lime-soft {
+  background: rgba(217,255,67,0.08);
+}
+
+/* =========================================================
+   BUTTON RESETS
+========================================================= */
+
+.btn-reset {
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.btn-reset:focus,
+.btn-reset:active {
+  box-shadow: none !important;
+}
+
+/* =========================================================
+   ICON SIZES
+========================================================= */
+
+.icon-20 svg {
+  width: 20px;
+  height: 20px;
+}
+
+.icon-22 svg {
+  width: 22px;
+  height: 22px;
+}
+
+.icon-24 svg {
+  width: 24px;
+  height: 24px;
+}
+
+.icon-30 svg {
+  width: 30px;
+  height: 30px;
+}
+
+.icon-34 svg {
+  width: 34px;
+  height: 34px;
+}
