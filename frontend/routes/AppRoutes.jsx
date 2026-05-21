@@ -6,6 +6,7 @@ import Recipient from '../src/pages/Recipient'
 import ReceiveMoney from '../src/pages/ReceiveMoney'
 import AcceptPayment from '../src/pages/AcceptPayment'
 import AddMoney from '../src/pages/AddMoney'
+import Convert from '../src/pages/Convert'
 
 const AppRoutes = () => {
   return (
@@ -17,6 +18,7 @@ const AppRoutes = () => {
       <Route path="/recipient" element={<Recipient />} />
       <Route path="/accept-payment" element={<AcceptPayment />} />
       <Route path="/add-money" element={<AddMoney />} />
+      <Route path="/convert" element={<Convert />} />
     </Routes>
   )
 }
