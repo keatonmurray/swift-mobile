@@ -79,13 +79,13 @@ const Homepage = () => {
         >
           <div className="position-absolute balance-glow" />
 
-          <p className="mb-2 text-white-55 fs-14">
+          <p className="mb-1 text-white-55 fs-14 mx-2 mt-1">
             Total balance
           </p>
 
           <div className="d-flex justify-content-between align-items-end">
             <div className="d-flex align-items-end gap-2">
-              <h3 className="fw-semibold mb-0 fs-34 ls-2">
+              <h3 className="fw-semibold mb-0 fs-30 ls-2 mx-2 mb-1">
                 $12,456.78
               </h3>
 
@@ -94,11 +94,6 @@ const Homepage = () => {
                 <ChevronDown size={14} />
               </div>
             </div>
-
-            <ChevronDown
-              size={18}
-              className="text-white-45"
-            />
           </div>
         </div>
 
@@ -177,20 +172,20 @@ const Homepage = () => {
 
           {[
             {
-              flag: '🇺🇸',
+              // flag: '🇺🇸',
               name: 'US Dollar',
               code: 'USD',
               amount: '$8,240.00',
             },
             {
-              flag: '🇪🇺',
+              // flag: '🇪🇺',
               name: 'Euro',
               code: 'EUR',
               amount: '€2,150.34',
               sub: '~ $2,353.20',
             },
             {
-              flag: '🇬🇧',
+              // flag: '🇬🇧',
               name: 'British Pound',
               code: 'GBP',
               amount: '£1,320.50',
@@ -199,7 +194,7 @@ const Homepage = () => {
           ].map((currency, index) => (
             <div
               key={index}
-              className={`d-flex justify-content-between align-items-center p-4 ${
+              className={`d-flex justify-content-between align-items-center px-0 py-4 ${
                 index !== 2
                   ? 'border-bottom border-secondary border-opacity-10'
                   : ''
@@ -221,7 +216,7 @@ const Homepage = () => {
                 </div>
               </div>
 
-              <div className="text-end">
+              <div className="text-end me-4">
                 <h5 className="mb-1 fw-semibold fs-14">
                   {currency.amount}
                 </h5>

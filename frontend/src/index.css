@@ -122,6 +122,10 @@ body {
   font-size: 26px !important;
 }
 
+.fs-30 {
+  font-size: 30px !important;
+}
+
 .fs-34 {
   font-size: 34px !important;
 }
@@ -171,6 +175,7 @@ body {
   border: 1px solid rgba(255,255,255,0.08);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
+  padding: 9px 12px !important;
 }
 
 .glass-nav {
