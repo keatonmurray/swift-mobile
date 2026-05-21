@@ -40,8 +40,6 @@ const ReceiveMoney = () => {
           initials: 'JS',
           flag: '🇪🇺',
           name: 'James Smith',
-          account: 'EUR',
-          note: 'Thank you!',
           amount: '+€924.35',
           path:"/accept-payment"
         },
@@ -49,8 +47,6 @@ const ReceiveMoney = () => {
           initials: 'AW',
           flag: '🇺🇸',
           name: 'Anna Williams',
-          account: 'USD',
-          note: 'For dinner',
           amount: '+$150.00',
           path:"/accept-payment"
         },
@@ -58,8 +54,6 @@ const ReceiveMoney = () => {
           initials: 'MR',
           flag: '🇬🇧',
           name: 'Michael Roberts',
-          account: 'GBP',
-          note: 'Here you go',
           amount: '+£320.50',
           path:"/accept-payment"
         },
@@ -259,14 +253,6 @@ const ReceiveMoney = () => {
                         <h5 className="fw-semibold mb-1 fs-14">
                           {item.name}
                         </h5>
-
-                        <p className="mb-1 text-white-50 fs-12">
-                          From {item.account} account
-                        </p>
-
-                        <p className="mb-0 text-white-50 fs-12 fst-italic">
-                          "{item.note}"
-                        </p>
                       </div>
                     </div>
 

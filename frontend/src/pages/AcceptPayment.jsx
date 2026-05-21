@@ -37,7 +37,7 @@ const AcceptPayment = () => {
         {/* HEADER */}
         <div
           style={enter(0)}
-          className="d-flex justify-content-between align-items-center mb-5"
+          className="d-flex justify-content-between align-items-center mb-4"
         >
 
          <Link to="/receive-money"
@@ -56,7 +56,7 @@ const AcceptPayment = () => {
         {/* AMOUNT */}
         <div
           style={enter(0.1)}
-          className="text-center mb-5"
+          className="text-center mb-4"
         >
 
           <div
