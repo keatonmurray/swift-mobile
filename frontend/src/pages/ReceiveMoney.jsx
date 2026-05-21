@@ -250,7 +250,7 @@ const ReceiveMoney = () => {
 
                       {/* DETAILS */}
                       <div>
-                        <h5 className="fw-semibold mb-1 fs-14">
+                        <h5 className="fw-semibold mb-1 fs-18">
                           {item.name}
                         </h5>
                       </div>
@@ -261,7 +261,7 @@ const ReceiveMoney = () => {
 
                       <div className="text-end">
                         <h5
-                          className="fw-semibold mb-1 fs-12"
+                          className="fw-medium mb-1 fs-12"
                           style={{
                             color: '#14D19B',
                           }}
