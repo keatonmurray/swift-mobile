@@ -116,7 +116,7 @@ const Home = () => {
             </Link>
 
             <Link
-              to="/dashboard"
+              to="/login"
               className="btn w-100 rounded-pill mt-3 d-flex align-items-center justify-content-center"
               style={{
                 height: "56px",

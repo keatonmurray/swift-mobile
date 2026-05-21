@@ -7,11 +7,13 @@ import ReceiveMoney from '../src/pages/ReceiveMoney'
 import AcceptPayment from '../src/pages/AcceptPayment'
 import AddMoney from '../src/pages/AddMoney'
 import Convert from '../src/pages/Convert'
+import Login from '../src/pages/Login'
 
 const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="/login" element={<Login />} />
       <Route path="/dashboard" element={<Homepage />} />
       <Route path="/send-money" element={<SendMoney />} />
       <Route path="/receive-money" element={<ReceiveMoney />} />
