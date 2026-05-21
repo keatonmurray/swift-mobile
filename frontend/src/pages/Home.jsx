@@ -102,7 +102,7 @@ const Home = () => {
         >
           <div className="mx-auto w-100" style={{ maxWidth: "340px" }}>
             <Link
-              to="#"
+              to="/register"
               className="btn w-100 rounded-pill fw-semibold d-flex align-items-center justify-content-center"
               style={{
                 height: "56px",
