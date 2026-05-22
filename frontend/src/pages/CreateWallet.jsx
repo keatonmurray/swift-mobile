@@ -20,81 +20,47 @@ import { countries } from "../constants/countries"
 
 const CreateWallet = () => {
 
-  const [visible, setVisible] =
-    useState(false)
-
-  // -----------------------------------
-  // STEP
-  // -----------------------------------
-
-  const [step, setStep] =
-    useState(1)
-
-  // -----------------------------------
-  // LOADING
-  // -----------------------------------
-
-  const [loading, setLoading] =
-    useState(false)
+  const [visible, setVisible] = useState(false)
+  const [step, setStep] = useState(1)
+  const [loading, setLoading] = useState(false)
 
   // -----------------------------------
   // STEP 1 FIELDS
   // -----------------------------------
 
-  const [firstName, setFirstName] =
-    useState("")
+  const [firstName, setFirstName] = useState("")
 
-  const [lastName, setLastName] =
-    useState("")
+  const [lastName, setLastName] = useState("")
 
-  const [email, setEmail] =
-    useState("")
+  const [email, setEmail] = useState("")
 
-  const [birthdate, setBirthdate] =
-    useState("")
+  const [birthdate, setBirthdate] = useState("")
 
-  const [country, setCountry] =
-    useState("US")
+  const [country, setCountry] = useState("US")
 
-  const [nationality, setNationality] =
-    useState("US")
+  const [nationality, setNationality] = useState("US")
 
-  const [
-    identificationNumber,
-    setIdentificationNumber,
-  ] = useState("")
+  const [identificationNumber, setIdentificationNumber] = useState("")
 
   // -----------------------------------
   // STEP 2 FIELDS
   // -----------------------------------
 
-  const [currency, setCurrency] =
-    useState("USD")
+  const [currency, setCurrency] = useState("USD")
 
   // -----------------------------------
   // EWALLET
   // -----------------------------------
 
-  const [ewalletId, setEwalletId] =
-    useState(
-      localStorage.getItem(
-        "personal_ewallet"
-      ) || ""
-    )
+  const [ewalletId, setEwalletId] = useState(localStorage.getItem("personal_ewallet") || "")
 
   // -----------------------------------
   // ANIMATION
   // -----------------------------------
 
   useEffect(() => {
-
-    const t = setTimeout(
-      () => setVisible(true),
-      80
-    )
-
+    const t = setTimeout(() => setVisible(true),80)
     return () => clearTimeout(t)
-
   }, [])
 
   const enter = (delay = 0) => ({
@@ -135,286 +101,148 @@ const CreateWallet = () => {
     minWidth: 18,
   }
 
-  // -----------------------------------
-  // RETRIEVE EWALLET
-  // -----------------------------------
+    // -----------------------------------
+    // RETRIEVE EWALLET
+    // -----------------------------------
 
-  const handleRetrieveWallet =
-    async () => {
-
-      try {
-
-        const token =
-          localStorage.getItem(
-            "api_token"
-          )
-
-        const response =
-          await axios.get(
+    const handleRetrieveWallet = async () => {
+        try {
+            const token = localStorage.getItem("api_token")
+            const response = await axios.get(
             `${import.meta.env.VITE_API_BASE_URL}/api/retrieve-personal-wallet`,
             {
-              headers: {
-                Authorization:
-                  `Bearer ${token}`,
-              },
+                headers: {
+                Authorization: `Bearer ${token}`,
+                },
             }
-          )
+            )
 
-        console.log(
-          "Retrieve wallet response:",
-          response.data
-        )
+            const walletData = response.data?.data?.wallet_rapyd
+            const retrievedWalletId = walletData?.id
 
-        const walletData =
-          response.data?.data
-            ?.wallet_rapyd
+            if (retrievedWalletId) {
+                setEwalletId(retrievedWalletId)
 
-        const retrievedWalletId =
-          walletData?.id
+                localStorage.setItem(
+                    "personal_ewallet",
+                    retrievedWalletId
+                )
 
-        console.log(
-          "Retrieved ewallet:",
-          retrievedWalletId
-        )
-
-        if (retrievedWalletId) {
-
-          setEwalletId(
-            retrievedWalletId
-          )
-
-          localStorage.setItem(
-            "personal_ewallet",
-            retrievedWalletId
-          )
-
-          return retrievedWalletId
+                return retrievedWalletId
+            }
+            return null
+        } catch (error) {
+            console.error(error)
+            return null
         }
-
-        return null
-
-      } catch (error) {
-
-        console.error(error)
-
-        return null
-      }
     }
 
-  // -----------------------------------
-  // STEP 1 SUBMIT
-  // -----------------------------------
+    // -----------------------------------
+    // STEP 1 SUBMIT
+    // -----------------------------------
 
-  const handleCreateWallet =
-    async (e) => {
-
-      e.preventDefault()
-
-      try {
-
-        setLoading(true)
-
-        const token =
-          localStorage.getItem(
-            "api_token"
-          )
+    const handleCreateWallet = async (e) => {
+        e.preventDefault()
 
         try {
+            setLoading(true)
 
-          const response =
-            await axios.post(
-              `${import.meta.env.VITE_API_BASE_URL}/api/create-personal-wallet`,
-              {
-                first_name:
-                  firstName,
+            const token = localStorage.getItem("api_token")
 
-                last_name:
-                  lastName,
-
-                email,
-
-                birthdate,
-
-                country,
-
-                nationality,
-
-                identification_number:
-                  identificationNumber,
-              },
-              {
-                headers: {
-                  Authorization:
-                    `Bearer ${token}`,
-
-                  Accept:
-                    "application/json",
+            try {
+            const response = await axios.post(
+                `${import.meta.env.VITE_API_BASE_URL}/api/create-personal-wallet`,
+                {
+                    first_name: firstName,
+                    last_name: lastName,
+                    email,
+                    birthdate,
+                    country,
+                    nationality,
+                    identification_number: identificationNumber,
                 },
-              }
+                {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    Accept: "application/json",
+                },
+                }
             )
 
-          console.log(
-            "Wallet created:",
-            response.data
-          )
+            console.log("Wallet created:", response.data)
+            } catch (createError) {
+            console.log(
+                "Wallet already exists:",
+                createError?.response?.data
+            )
+            }
 
-        } catch (createError) {
+            // ALWAYS RETRIEVE EWALLET
+            const retrievedWalletId = await handleRetrieveWallet()
 
-          console.log(
-            "Wallet already exists:",
-            createError?.response?.data
-          )
+            // SAVE
+            setEwalletId(retrievedWalletId)
+
+            localStorage.setItem(
+            "personal_ewallet",
+            retrievedWalletId
+            )
+
+            // NEXT STEP
+            setStep(2)
+        } catch (error) {
+            console.error(error)
+
+            console.log(error?.response?.data)
+        } finally {
+            setLoading(false)
         }
-
-        // ALWAYS RETRIEVE EWALLET
-        const retrievedWalletId =
-          await handleRetrieveWallet()
-
-        console.log(
-          "Final wallet ID:",
-          retrievedWalletId
-        )
-
-        if (!retrievedWalletId) {
-
-          alert(
-            "Failed to retrieve wallet."
-          )
-
-          return
-        }
-
-        // SAVE
-        setEwalletId(
-          retrievedWalletId
-        )
-
-        localStorage.setItem(
-          "personal_ewallet",
-          retrievedWalletId
-        )
-
-        // NEXT STEP
-        setStep(2)
-
-      } catch (error) {
-
-        console.error(error)
-
-        console.log(
-          error?.response?.data
-        )
-
-      } finally {
-
-        setLoading(false)
-      }
     }
 
-  // -----------------------------------
-  // STEP 2 SUBMIT
-  // -----------------------------------
+    // -----------------------------------
+    // STEP 2 SUBMIT
+    // -----------------------------------
 
-  const handleCreateCurrencyAccount =
-    async (e) => {
+    const handleCreateCurrencyAccount = async (e) => {
+        e.preventDefault()
 
-      e.preventDefault()
+        try {
+            setLoading(true)
 
-      try {
+            const token = localStorage.getItem("api_token")
 
-        setLoading(true)
+            // ALWAYS GET FRESH EWALLET
+            let finalEwallet = ewalletId
 
-        const token =
-          localStorage.getItem(
-            "api_token"
-          )
+            if (!finalEwallet) {
+                finalEwallet = localStorage.getItem("personal_ewallet")
+            }
 
-        // ALWAYS GET FRESH EWALLET
-        let finalEwallet =
-          ewalletId
+            if (!finalEwallet) {
+                finalEwallet = await handleRetrieveWallet()
+            }
 
-        if (!finalEwallet) {
-
-          finalEwallet =
-            localStorage.getItem(
-              "personal_ewallet"
-            )
-        }
-
-        if (!finalEwallet) {
-
-          finalEwallet =
-            await handleRetrieveWallet()
-        }
-
-        console.log(
-          "Submitting ewallet:",
-          finalEwallet
-        )
-
-        if (!finalEwallet) {
-
-          alert(
-            "No ewallet found."
-          )
-
-          return
-        }
-
-        const response =
-          await axios.post(
-            `${import.meta.env.VITE_API_BASE_URL}/api/create-personal-currency-account`,
-            {
-              ewallet:
-                finalEwallet,
-
-              country,
-
-              currency,
-
-              requested_currency:
+            const response = await axios.post( `${import.meta.env.VITE_API_BASE_URL}/api/create-personal-currency-account`, {
+                ewallet: finalEwallet,
+                country,
                 currency,
-
-              merchant_reference_id:
+                requested_currency: currency,
+                merchant_reference_id:
                 `swift_${Date.now()}`,
             },
             {
-              headers: {
-                Authorization:
-                  `Bearer ${token}`,
-
-                Accept:
-                  "application/json",
-              },
+                headers: {
+                Authorization: `Bearer ${token}`,
+                Accept: "application/json",
+                },
             }
-          )
+            )
 
-        console.log(
-          "Currency account created:",
-          response.data
-        )
-
-        alert(
-          "Currency account created successfully."
-        )
-
-      } catch (error) {
-
-        console.error(error)
-
-        console.log(
-          error?.response?.data
-        )
-
-        alert(
-          error?.response?.data?.message ||
-          "Something went wrong."
-        )
-
-      } finally {
-
-        setLoading(false)
-      }
+        } catch (error) {
+            console.log(error?.response?.data)
+        } finally {
+            setLoading(false)
+        }
     }
 
   return (
