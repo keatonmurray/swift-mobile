@@ -133,8 +133,6 @@ const Homepage = () => {
     transition: `opacity 0.6s ease ${delay}s, transform 0.6s ease ${delay}s`,
   })
 
-  console.log(wallet)
-
   return (
     <div className="bg-main-pallette min-vh-100 text-white">
       <div className="container-fluid px-4 pt-4 mobile-shell-padding-bottom mobile-shell">
@@ -226,9 +224,9 @@ const Homepage = () => {
             },
             {
               icon: <RefreshCw size={30} className="text-lime" />,
-              title: 'Convert',
-              subtitle: 'Convert currencies',
-              path: '/convert',
+              title: 'Open Currency',
+              subtitle: 'Open a currency wallet',
+              path: '/create-wallet',
             },
             {
               icon: <Plus size={34} className="text-lime" />,

@@ -10,7 +10,8 @@ const AppContent = () => {
   const hideFooterRoutes = [
     '/',
     '/login',
-    '/register'
+    '/register',
+    '/select-account-type'
   ]
 
   const shouldHideFooter = hideFooterRoutes.includes(

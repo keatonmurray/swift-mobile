@@ -9,6 +9,8 @@ import AddMoney from '../src/pages/AddMoney'
 import Convert from '../src/pages/Convert'
 import Login from '../src/pages/Login'
 import Register from '../src/pages/Register'
+import CreateWallet from '../src/pages/CreateWallet'
+import SelectAccountType from '../src/pages/SelectAccountType'
 
 const AppRoutes = () => {
   return (
@@ -23,6 +25,8 @@ const AppRoutes = () => {
       <Route path="/accept-payment" element={<AcceptPayment />} />
       <Route path="/add-money" element={<AddMoney />} />
       <Route path="/convert" element={<Convert />} />
+      <Route path="/create-wallet" element={<CreateWallet />} />
+      <Route path="/select-account-type" element={<SelectAccountType />} />
     </Routes>
   )
 }
