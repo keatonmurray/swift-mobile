@@ -58,6 +58,16 @@ body {
   border-radius: 50px;
 }
 
+.btn-branded.disabled,
+.btn-branded:disabled {
+  background-color: #d9ff43 !important;
+  border-color: none !important;
+  color: #000 !important;
+
+  opacity: 1 !important;
+  box-shadow: none !important;
+}
+
 /* =========================================================
    COLORS
 ========================================================= */
