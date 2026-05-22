@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import axios from "axios"
+import { useNavigate } from "react-router-dom"
 
 import {
   MdOutlinePerson,
@@ -19,10 +20,11 @@ import {
 import { countries } from "../constants/countries"
 
 const CreateWallet = () => {
-
+  const navigate = useNavigate()
   const [visible, setVisible] = useState(false)
   const [step, setStep] = useState(1)
   const [loading, setLoading] = useState(false)
+  const userId = localStorage.getItem("user_id");
 
   // -----------------------------------
   // STEP 1 FIELDS
@@ -210,8 +212,6 @@ const CreateWallet = () => {
             setLoading(true)
 
             const token = localStorage.getItem("api_token")
-
-            // ALWAYS GET FRESH EWALLET
             let finalEwallet = ewalletId
 
             if (!finalEwallet) {
@@ -229,15 +229,14 @@ const CreateWallet = () => {
                 requested_currency: currency,
                 merchant_reference_id:
                 `swift_${Date.now()}`,
-            },
-            {
-                headers: {
-                Authorization: `Bearer ${token}`,
-                Accept: "application/json",
-                },
-            }
+                },{
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        Accept: "application/json",
+                    },
+                }
             )
-
+            navigate(`/dashboard/${userId}`)
         } catch (error) {
             console.log(error?.response?.data)
         } finally {
