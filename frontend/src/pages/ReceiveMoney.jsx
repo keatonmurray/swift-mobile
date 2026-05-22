@@ -20,6 +20,7 @@ const ReceiveMoney = () => {
 
   const navigate = useNavigate()
   const [visible, setVisible] = useState(false)
+  const userId = localStorage.getItem('user_id')
 
   useEffect(() => {
     const t = setTimeout(() => setVisible(true), 80)
@@ -106,7 +107,7 @@ const ReceiveMoney = () => {
           style={enter(0)}
           className="d-flex justify-content-between align-items-center mb-5"
         >
-          <Link to="/dashboard"
+          <Link to={`/dashboard/${userId}`}
             className="btn btn-dark rounded-circle d-flex top-cta-btn align-items-center justify-content-center"
           >
             <ChevronLeft size={18} color="white" />

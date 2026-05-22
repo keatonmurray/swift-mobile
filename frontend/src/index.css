@@ -185,7 +185,7 @@ body {
   border: 1px solid rgba(255,255,255,0.08);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  padding: 9px 12px !important;
+  padding: 14px 12px !important;
 }
 
 .glass-nav {
