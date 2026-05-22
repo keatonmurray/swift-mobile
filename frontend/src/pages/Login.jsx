@@ -68,14 +68,9 @@ const Login = () => {
       >
         <Link
           to="/"
-          className="d-inline-flex align-items-center justify-content-center text-white text-decoration-none"
+          className="d-inline-flex align-items-center justify-content-center text-white text-decoration-none top-cta-btn"
           style={{
-            width: 42,
-            height: 42,
             borderRadius: "50%",
-            border: "1px solid rgba(255,255,255,0.15)",
-            background: "rgba(255,255,255,0.06)",
-            backdropFilter: "blur(12px)",
           }}
         >
           <MdArrowBack size={20} />
@@ -245,7 +240,7 @@ const Login = () => {
                 {/* Submit */}
                 <button
                   type="submit"
-                  className="btn w-100 fw-semibold border-0 btn-branded"
+                  className="w-100 fw-semibold border-0 btn-branded"
                 >
                   Sign in
                 </button>
@@ -253,10 +248,9 @@ const Login = () => {
 
               {/* Register */}
               <p
-                className="text-center mt-4 mb-0"
+                className="text-center mt-4 mb-0 text-white"
                 style={{
                   ...enter(0.3),
-                  color: "rgba(255,255,255,0.5)",
                   fontSize: 13,
                 }}
               >

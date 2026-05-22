@@ -116,16 +116,7 @@ const Register = () => {
       >
         <Link
           to="/select-account-type"
-          className="d-inline-flex align-items-center justify-content-center rounded-circle text-white text-decoration-none"
-          style={{
-            width: 42,
-            height: 42,
-            border:
-              "1px solid rgba(255,255,255,0.15)",
-            background:
-              "rgba(255,255,255,0.06)",
-            backdropFilter: "blur(12px)",
-          }}
+          className="d-inline-flex align-items-center justify-content-center rounded-circle text-white text-decoration-none top-cta-btn"
         >
           <MdArrowBack size={20} />
         </Link>
