@@ -5,7 +5,7 @@ import {
   ChevronRight,
   ArrowUpRight,
   ArrowDownLeft,
-  RefreshCw,
+  ArrowLeftRight,
   Plus,
 } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
@@ -223,7 +223,7 @@ const Homepage = () => {
               path: '/receive-money',
             },
             {
-              icon: <RefreshCw size={30} className="text-lime" />,
+              icon: <ArrowLeftRight size={30} className="text-lime" />,
               title: 'Open Currency',
               subtitle: 'Open a currency wallet',
               path: '/create-wallet',
@@ -302,17 +302,12 @@ const Homepage = () => {
                   }`}
                 >
                   <div className="d-flex align-items-center gap-3">
-
-                    <div className="currency-circle d-flex align-items-center justify-content-center">
-                      {acc.currency?.slice(0, 1)}
-                    </div>
-
                     <div>
-                      <h5 className="mb-1 fw-semibold fs-14">
+                      <h5 className="mb-1 fw-semibold fs-14 ms-3">
                         {acc.currency} Account
                       </h5>
 
-                      <p className="mb-0 text-white-45 fs-12">
+                      <p className="mb-0 text-white-45 fs-12 ms-3">
                         Available currency wallet
                       </p>
                     </div>

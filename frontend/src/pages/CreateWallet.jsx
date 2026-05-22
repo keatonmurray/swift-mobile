@@ -31,17 +31,11 @@ const CreateWallet = () => {
   // -----------------------------------
 
   const [firstName, setFirstName] = useState("")
-
   const [lastName, setLastName] = useState("")
-
   const [email, setEmail] = useState("")
-
   const [birthdate, setBirthdate] = useState("")
-
   const [country, setCountry] = useState("US")
-
   const [nationality, setNationality] = useState("US")
-
   const [identificationNumber, setIdentificationNumber] = useState("")
 
   // -----------------------------------
@@ -170,8 +164,6 @@ const CreateWallet = () => {
                 },
                 }
             )
-
-            console.log("Wallet created:", response.data)
             } catch (createError) {
             console.log(
                 "Wallet already exists:",
@@ -255,7 +247,7 @@ const CreateWallet = () => {
           className="d-flex justify-content-between align-items-center"
         >
           <Link
-            to="/dashboard"
+            to={`/dashboard/${userId}`}
             className="btn btn-dark rounded-circle d-flex align-items-center justify-content-center top-cta-btn"
           >
             <ChevronLeft
@@ -295,8 +287,8 @@ const CreateWallet = () => {
             <div
               className="d-flex align-items-center justify-content-center"
               style={{
-                width: 50,
-                height: 31,
+                width: 45,
+                height: 45,
                 borderRadius: "50%",
 
                 background:
@@ -325,7 +317,7 @@ const CreateWallet = () => {
                 fontSize: 15,
               }}
             >
-              Creating Your Wallet
+              Create Wallet
             </span>
           </div>
 
@@ -344,8 +336,8 @@ const CreateWallet = () => {
             <div
               className="d-flex align-items-center justify-content-center"
               style={{
-                width: 50,
-                height: 31,
+                width: 45,
+                height: 45,
                 borderRadius: "50%",
 
                 background:
@@ -372,7 +364,7 @@ const CreateWallet = () => {
                 fontSize: 15,
               }}
             >
-              Setting up your currency
+            Currency
             </span>
           </div>
         </div>
@@ -380,15 +372,6 @@ const CreateWallet = () => {
         {/* STEP 1 */}
         {step === 1 && (
           <>
-            <div
-              className="mt-4"
-              style={enter(0.1)}
-            >
-              <h1 className="text-white fw-semibold mb-3 fs-42">
-                Create your wallet
-              </h1>
-            </div>
-
             <form
               className="mt-4"
               style={enter(0.15)}
@@ -398,7 +381,7 @@ const CreateWallet = () => {
             >
 
               {/* FIRST NAME */}
-              <div className="mb-4">
+              <div className="mb-4 mt-5">
 
                 <label className="form-label text-white fw-medium">
                   First name

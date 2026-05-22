@@ -16,6 +16,7 @@ import { Link } from 'react-router-dom'
 
 const SendMoney = () => {
 
+  const userId = localStorage.getItem('user_id')
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
@@ -40,7 +41,7 @@ const SendMoney = () => {
           style={enter(0)}
           className="d-flex justify-content-between align-items-center mb-5"
         >
-          <Link to="/dashboard" className="btn btn-dark rounded-circle d-flex align-items-center justify-content-center top-cta-btn">
+          <Link to={`/dashboard/${userId}`} className="btn btn-dark rounded-circle d-flex align-items-center justify-content-center top-cta-btn">
             <ChevronLeft size={18} color="white" />
           </Link>
 
