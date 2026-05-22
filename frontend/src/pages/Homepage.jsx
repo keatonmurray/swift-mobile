@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import {
   Bell,
   ChevronDown,
@@ -8,24 +8,132 @@ import {
   RefreshCw,
   Plus,
 } from 'lucide-react'
-import { Link } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios'
+
+// TODO: UPDATE TO REAL-TIME DYNAMIC FX RATES
+const FX_RATES = {
+  USD: 1,
+  AUD: 0.65,
+  GBP: 1.27,
+  CAD: 0.74,
+  EUR: 1.08,
+}
 
 const Homepage = () => {
-  
+
   const navigate = useNavigate()
+
+  const token = localStorage.getItem('api_token')
+  const userId = localStorage.getItem('user_id')
+
   const [visible, setVisible] = useState(false)
+
+  const [user, setUser] = useState(null)
+  const [wallet, setWallet] = useState(null)
+  const [bankAccounts, setBankAccounts] = useState([])
+  const [walletTransactions, setWalletTransactions] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  const authHeaders = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+
+  useEffect(() => {
+    if (!token) {
+      navigate('/login')
+    }
+  }, [token, navigate])
 
   useEffect(() => {
     const t = setTimeout(() => setVisible(true), 80)
     return () => clearTimeout(t)
   }, [])
 
+  useEffect(() => {
+    const fetchAll = async () => {
+      try {
+        const [profileRes, walletRes, bankRes, txRes] =
+          await Promise.allSettled([
+            axios.get(
+              `${import.meta.env.VITE_API_BASE_URL}/api/profile`,
+              authHeaders
+            ),
+
+            axios.get(
+              `${import.meta.env.VITE_API_BASE_URL}/api/retrieve-personal-wallet`,
+              authHeaders
+            ),
+
+            axios.get(
+              `${import.meta.env.VITE_API_BASE_URL}/api/retrieve-personal-currency`,
+              authHeaders
+            ),
+
+            axios.get(
+              `${import.meta.env.VITE_API_BASE_URL}/api/get-wallet-transactions`,
+              authHeaders
+            ),
+          ])
+
+        if (profileRes.status === 'fulfilled') {
+          setUser(profileRes.value.data.user)
+        }
+
+        if (walletRes.status === 'fulfilled') {
+          setWallet(
+            walletRes.value.data?.data?.wallet_rapyd ?? null
+          )
+        }
+
+        if (bankRes.status === 'fulfilled') {
+          setBankAccounts(
+            bankRes.value.data?.data?.wallet_rapyd?.bank_accounts ?? []
+          )
+        }
+
+        if (txRes.status === 'fulfilled') {
+          setWalletTransactions(
+            txRes.value.data.transactions ?? []
+          )
+        }
+      } catch (err) {
+        console.error(err)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchAll()
+  }, [])
+
+  const totalBalance = useMemo(() => {
+    return (
+      wallet?.accounts?.reduce((sum, acc) => {
+        const balance = Number(acc.balance || 0)
+        const rate = FX_RATES?.[acc.currency] ?? 0
+
+        return sum + balance * rate
+      }, 0) || 0
+    )
+  }, [wallet])
+
+  const formattedTotal = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(totalBalance)
+
   const enter = (delay = 0) => ({
     opacity: visible ? 1 : 0,
     transform: visible ? 'translateY(0)' : 'translateY(20px)',
     transition: `opacity 0.6s ease ${delay}s, transform 0.6s ease ${delay}s`,
   })
+
+  console.log(wallet)
 
   return (
     <div className="bg-main-pallette min-vh-100 text-white">
@@ -53,7 +161,8 @@ const Homepage = () => {
             </div>
 
             <div className="profile-circle d-flex align-items-center justify-content-center">
-              MT
+              {user?.first_name?.[0] || ''}
+              {user?.last_name?.[0] || ''}
             </div>
           </div>
         </div>
@@ -64,11 +173,11 @@ const Homepage = () => {
           className="mb-4"
         >
           <p className="mb-1 text-white-60 fs-18">
-            Welcome back,
+            Welcome,
           </p>
 
           <h2 className="fw-bold mb-0 fs-42 lh-1 ls-2">
-            Michael
+            {user?.first_name || 'User'}
           </h2>
         </div>
 
@@ -86,7 +195,7 @@ const Homepage = () => {
           <div className="d-flex justify-content-between align-items-end">
             <div className="d-flex align-items-end gap-2">
               <h3 className="fw-semibold mb-0 fs-30 ls-2 mx-2 mb-1">
-                $12,456.78
+                {loading ? 'Loading...' : formattedTotal}
               </h3>
 
               <div className="d-flex align-items-center gap-1 mb-2 text-white-60 fs-14">
@@ -103,56 +212,56 @@ const Homepage = () => {
           className="row g-3 mb-4"
         >
           {[
-              {
-                icon: <ArrowUpRight size={34} className="text-lime" />,
-                title: 'Send',
-                subtitle: 'Send money',
-                path: '/send-money',
-              },
-              {
-                icon: <ArrowDownLeft size={34} className="text-lime" />,
-                title: 'Receive',
-                subtitle: 'Receive money',
-                path: '/receive-money',
-              },
-              {
-                icon: <RefreshCw size={30} className="text-lime" />,
-                title: 'Convert',
-                subtitle: 'Convert currencies',
-                path: '/convert',
-              },
-              {
-                icon: <Plus size={34} className="text-lime" />,
-                title: 'Add Money',
-                subtitle: 'Deposit to account',
-                path: '/add-money',
-              },
-            ].map((item, index) => (
-              <div className="col-6" key={index}>
-                <div
-                  onClick={() => navigate(item.path)}
-                  className="d-flex align-items-center glass-card action-card h-100 position-relative overflow-hidden"
-                  style={{
-                    cursor: 'pointer',
-                    ...enter(0.3),
-                  }}
-                >
-                  <div>
-                    <div className="mb-1">
-                      {item.icon}
-                    </div>
-
-                    <h4 className="fw-semibold mb-1 fs-14 text-white">
-                      {item.title}
-                    </h4>
-
-                    <p className="mb-0 text-white-45 fs-12">
-                      {item.subtitle}
-                    </p>
+            {
+              icon: <ArrowUpRight size={34} className="text-lime" />,
+              title: 'Send',
+              subtitle: 'Send money',
+              path: '/send-money',
+            },
+            {
+              icon: <ArrowDownLeft size={34} className="text-lime" />,
+              title: 'Receive',
+              subtitle: 'Receive money',
+              path: '/receive-money',
+            },
+            {
+              icon: <RefreshCw size={30} className="text-lime" />,
+              title: 'Convert',
+              subtitle: 'Convert currencies',
+              path: '/convert',
+            },
+            {
+              icon: <Plus size={34} className="text-lime" />,
+              title: 'Add Money',
+              subtitle: 'Deposit to account',
+              path: '/add-money',
+            },
+          ].map((item, index) => (
+            <div className="col-6" key={index}>
+              <div
+                onClick={() => navigate(item.path)}
+                className="d-flex align-items-center glass-card action-card h-100 position-relative overflow-hidden"
+                style={{
+                  cursor: 'pointer',
+                  ...enter(0.3),
+                }}
+              >
+                <div>
+                  <div className="mb-1">
+                    {item.icon}
                   </div>
+
+                  <h4 className="fw-semibold mb-1 fs-14 text-white">
+                    {item.title}
+                  </h4>
+
+                  <p className="mb-0 text-white-45 fs-12">
+                    {item.subtitle}
+                  </p>
                 </div>
               </div>
-            ))}
+            </div>
+          ))}
         </div>
 
         {/* CURRENCIES */}
@@ -165,70 +274,65 @@ const Homepage = () => {
               Your Currencies
             </h3>
 
-            <button className="fs-16 btn btn-reset text-lime fw-semibold">
+            <Link
+              to={`/currency-details/${userId}`}
+              className="fs-16 btn btn-reset text-lime fw-semibold text-decoration-none"
+            >
               View all
-            </button>
+            </Link>
           </div>
 
-          {[
-            {
-              // flag: '🇺🇸',
-              name: 'US Dollar',
-              code: 'USD',
-              amount: '$8,240.00',
-            },
-            {
-              // flag: '🇪🇺',
-              name: 'Euro',
-              code: 'EUR',
-              amount: '€2,150.34',
-              sub: '~ $2,353.20',
-            },
-            {
-              // flag: '🇬🇧',
-              name: 'British Pound',
-              code: 'GBP',
-              amount: '£1,320.50',
-              sub: '~ $1,664.10',
-            },
-          ].map((currency, index) => (
-            <div
-              key={index}
-              className={`d-flex justify-content-between align-items-center px-0 py-4 ${
-                index !== 2
-                  ? 'border-bottom border-secondary border-opacity-10'
-                  : ''
-              }`}
-            >
-              <div className="d-flex align-items-center gap-3">
-                <div className="fs-34">
-                  {currency.flag}
-                </div>
-
-                <div>
-                  <h5 className="mb-1 fw-semibold fs-14">
-                    {currency.name}
-                  </h5>
-
-                  <p className="mb-0 text-white-45 fs-12">
-                    {currency.code}
-                  </p>
-                </div>
-              </div>
-
-              <div className="text-end me-4">
-                <h5 className="mb-1 fw-semibold fs-14">
-                  {currency.amount}
-                </h5>
-
-                {currency.sub && (
-                  <p className="mb-0 text-white-35 fs-14">
-                    {currency.sub}
-                  </p>
-                )}
-              </div>
+          {loading ? (
+            <div className="text-center py-4">
+              Loading currencies...
             </div>
-          ))}
+          ) : bankAccounts?.length ? (
+            bankAccounts.map((acc, index) => {
+
+              const walletAccount =
+                wallet?.accounts?.find(
+                  (a) => a.currency === acc.currency
+                )
+
+              return (
+                <div
+                  key={index}
+                  className={`d-flex justify-content-between align-items-center px-0 py-4 ${
+                    index !== bankAccounts.length - 1
+                      ? 'border-bottom border-secondary border-opacity-10'
+                      : ''
+                  }`}
+                >
+                  <div className="d-flex align-items-center gap-3">
+
+                    <div className="currency-circle d-flex align-items-center justify-content-center">
+                      {acc.currency?.slice(0, 1)}
+                    </div>
+
+                    <div>
+                      <h5 className="mb-1 fw-semibold fs-14">
+                        {acc.currency} Account
+                      </h5>
+
+                      <p className="mb-0 text-white-45 fs-12">
+                        Available currency wallet
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="text-end me-4">
+                    <h5 className="mb-1 fw-semibold fs-14">
+                      {walletAccount?.balance || 0} {acc.currency}
+                    </h5>
+                  </div>
+                </div>
+              )
+            })
+          ) : (
+            <div className="text-center py-4 text-white-45">
+              No currencies yet
+            </div>
+          )}
         </div>
 
         {/* SECURITY CARD */}

@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react"
+import { toast } from "react-toastify"
+import axios from "axios"
 import {
   MdArrowBack,
   MdOutlineEmail,
@@ -9,7 +11,12 @@ import {
 } from "react-icons/md"
 
 const Login = () => {
+  
+  const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false)
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [submitting, setSubmitting] = useState(false)
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
@@ -22,6 +29,35 @@ const Login = () => {
     transform: visible ? "translateY(0)" : "translateY(20px)",
     transition: `opacity 0.6s ease ${delay}s, transform 0.6s ease ${delay}s`,
   })
+
+  const handleLogin = async (e) => {
+    e.preventDefault()
+    if (submitting) return
+    setSubmitting(true)
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/api/login`,
+        { email, password, account_type: "personal" },
+        { withCredentials: true }
+      )
+
+      if (response.data?.user) {
+        localStorage.setItem("api_token", response.data.token)
+        localStorage.setItem("user_id", response.data.user.id)
+        localStorage.setItem("account_type", response.data.user.account_type)
+        navigate(`/dashboard/${response.data.user.id}`)
+      }
+    } catch (error) {
+      if (error.response?.status === 401) {
+        toast.error(error.response?.data?.message || "Invalid credentials")
+      } else {
+        toast.error("Something went wrong. Please try again.")
+      }
+    } finally {
+      setSubmitting(false)
+    }
+  }
 
   return (
     <div className="min-vh-100 d-flex flex-column overflow-hidden bg-main-pallette">
@@ -96,7 +132,9 @@ const Login = () => {
               </p>
 
               {/* Form */}
-              <form style={enter(0.2)}>
+              <form
+                onSubmit={handleLogin}
+                style={enter(0.2)}>
                 {/* Email */}
                 <div className="mb-4">
                   <label
@@ -126,6 +164,11 @@ const Login = () => {
 
                     <input
                       type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                      autoComplete="email"
+                      inputMode="email"
                       className="form-control border-0 bg-transparent text-white shadow-none p-0"
                     />
                   </div>
@@ -160,6 +203,10 @@ const Login = () => {
 
                     <input
                       type={showPassword ? "text" : "password"}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                      autoComplete="current-password"
                       className="form-control border-0 bg-transparent text-white shadow-none p-0"
                     />
 
@@ -196,12 +243,12 @@ const Login = () => {
                 </div>
 
                 {/* Submit */}
-                <Link to="/dashboard"
+                <button
                   type="submit"
                   className="btn w-100 fw-semibold border-0 btn-branded"
                 >
                   Sign in
-                </Link>
+                </button>
               </form>
 
               {/* Register */}
