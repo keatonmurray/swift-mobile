@@ -38,7 +38,7 @@ const methods = [
 const quickAmounts = [50, 100, 250, 500]
 
 const AddMoney = () => {
-
+  const userId = localStorage.getItem('user_id')
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
@@ -89,7 +89,7 @@ const AddMoney = () => {
           className="d-flex justify-content-between align-items-center mb-5"
         >
           <Link
-            to="/dashboard"
+            to={`/dashboard/${userId}`}
             className="btn btn-dark rounded-circle d-flex top-cta-btn align-items-center justify-content-center"
           >
             <ChevronLeft size={18} color="white" />

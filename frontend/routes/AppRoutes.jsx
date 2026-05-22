@@ -11,6 +11,7 @@ import Login from '../src/pages/Login'
 import Register from '../src/pages/Register'
 import CreateWallet from '../src/pages/CreateWallet'
 import SelectAccountType from '../src/pages/SelectAccountType'
+import Transactions from '../src/pages/Transactions'
 
 const AppRoutes = () => {
   return (
@@ -27,6 +28,7 @@ const AppRoutes = () => {
       <Route path="/convert" element={<Convert />} />
       <Route path="/create-wallet" element={<CreateWallet />} />
       <Route path="/select-account-type" element={<SelectAccountType />} />
+      <Route path="/transactions" element={<Transactions />} />
     </Routes>
   )
 }
