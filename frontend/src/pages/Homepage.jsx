@@ -32,7 +32,6 @@ const Homepage = () => {
   const [user, setUser] = useState(null)
   const [wallet, setWallet] = useState(null)
   const [bankAccounts, setBankAccounts] = useState([])
-  const [walletTransactions, setWalletTransactions] = useState([])
   const [loading, setLoading] = useState(true)
 
   const authHeaders = {
@@ -91,12 +90,6 @@ const Homepage = () => {
         if (bankRes.status === 'fulfilled') {
           setBankAccounts(
             bankRes.value.data?.data?.wallet_rapyd?.bank_accounts ?? []
-          )
-        }
-
-        if (txRes.status === 'fulfilled') {
-          setWalletTransactions(
-            txRes.value.data.transactions ?? []
           )
         }
       } catch (err) {

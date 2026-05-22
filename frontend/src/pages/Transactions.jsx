@@ -12,11 +12,14 @@ import {
   Landmark,
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 
 const Transactions = () => {
 
   const userId = localStorage.getItem('user_id')
   const [visible, setVisible] = useState(false)
+  const [transactions, setTransactions] = useState([])
+  const token = localStorage.getItem("api_token")
 
   useEffect(() => {
     const t = setTimeout(() => setVisible(true), 80)
@@ -29,43 +32,49 @@ const Transactions = () => {
     transition: `opacity 0.6s ease ${delay}s, transform 0.6s ease ${delay}s`,
   })
 
-  const transactions = [
-    {
-      type: 'sent',
-      name: 'James Smith',
-      date: 'May 15, 2025 • 10:24 AM',
-      amount: '-1,000.00 USD',
-      status: 'Completed',
-    },
-    {
-      type: 'received',
-      name: 'Olivia Brown',
-      date: 'May 14, 2025 • 4:31 PM',
-      amount: '+250.00 EUR',
-      status: 'Completed',
-    },
-    {
-      type: 'bank',
-      name: 'Bank Transfer',
-      date: 'May 12, 2025 • 9:15 AM',
-      amount: '-500.00 USD',
-      status: 'Completed',
-    },
-    {
-      type: 'received',
-      name: 'Daniel Lee',
-      date: 'May 10, 2025 • 2:08 PM',
-      amount: '+120.00 USD',
-      status: 'Completed',
-    },
-    {
-      type: 'sent',
-      name: 'Sophia Martinez',
-      date: 'May 9, 2025 • 11:47 AM',
-      amount: '-75.00 EUR',
-      status: 'Completed',
-    },
-  ]
+ const getTransactions = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/api/get-wallet-transactions`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+
+      setTransactions(response.data.transactions ?? [])
+
+      console.log(response.data.transactions)
+
+    } catch (error) {
+      console.error("Transaction fetch error:", error)
+    }
+  }
+
+  useEffect(() => {
+    getTransactions()
+  }, [])
+
+  const formattedTransactions = transactions.map((tx) => ({
+    type:
+      tx.type === 'p2p_transfer'
+        ? 'sent'
+        : 'received',
+
+    name:
+      tx.type === 'p2p_transfer'
+        ? 'Wallet Transfer'
+        : 'Incoming Transfer',
+
+    date: new Date(tx.created_at * 1000).toLocaleString(),
+
+    amount: `${
+      tx.type === 'p2p_transfer' ? '-' : '+'
+    }${Number(tx.amount).toFixed(2)} ${tx.currency}`,
+
+    status: tx.status,
+  }))
 
   const renderIcon = (type) => {
 
@@ -179,47 +188,49 @@ const Transactions = () => {
         {/* TRANSACTIONS */}
         <div className="d-flex flex-column gap-3">
 
-        {transactions.map((transaction, index) => (
-            <div
+        {formattedTransactions.map((transaction, index) => (
+          <div
             key={index}
             style={enter(0.25 + index * 0.1)}
             className="glass-card p-3 rounded-4 border border-secondary border-opacity-10"
-            >
-
+          >
             <div className="d-flex justify-content-between align-items-center">
 
-                <div className="d-flex align-items-center gap-3">
+              <div className="d-flex align-items-center gap-3">
 
                 {renderIcon(transaction.type)}
 
                 <div>
-                    <h6 className="mb-1 fw-semibold fs-16">
+                  <h6 className="mb-1 fw-semibold fs-16">
                     {transaction.name}
-                    </h6>
+                  </h6>
 
-                    <p className="mb-0 text-white-50 fs-12">
+                  <p className="mb-0 text-white-50 fs-12">
                     {transaction.date}
-                    </p>
+                  </p>
                 </div>
-                </div>
+              </div>
 
-                <div className="text-end">
+              <div className="text-end">
 
                 <h6 className="mb-1 fw-light fs-15">
-                    {transaction.amount}
+                  {transaction.amount}
                 </h6>
 
                 <p
-                    className="mb-0 fw-medium fs-12"
-                    style={{
-                    color: '#4ADE80',
-                    }}
+                  className="mb-0 fw-medium fs-12"
+                  style={{
+                    color:
+                      transaction.status === 'CLOSED'
+                        ? '#4ADE80'
+                        : '#FACC15',
+                  }}
                 >
-                    {transaction.status}
+                  {transaction.status}
                 </p>
-                </div>
+              </div>
             </div>
-            </div>
+          </div>
         ))}
         </div>
       </div>
